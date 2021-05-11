@@ -116,14 +116,12 @@ if(isEmail){
                                         readOnly
                                         type="text"
                                         value={pincode}
-                                        className="mt-2"
                                     />))}
 
                                     {(!isPincode && (<FormControl
                                         readOnly
                                         type="text"
                                         value={district_name}
-                                        className="mt-2"
                                     />))}
                                     
                                 </Form>

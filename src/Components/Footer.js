@@ -9,7 +9,7 @@ const Footer = () => {
           <MDBCol md="12">
             <h5 className="title">Credits</h5>
             <p>
-              Designed, Developed and Maintained by <a href="www.linkedin.com/in/kunal-gohel-85958a116">Kunal Gohel</a> & Dhaval Padaya.
+              Designed, Developed and Maintained by <a href="www.linkedin.com/in/kunal-gohel-85958a116">Kunal Gohel</a> & <a href="https://dhavalpadaya.herokuapp.com/"> Dhaval Padaya.</a>
             </p>
           </MDBCol>
         </MDBRow>
