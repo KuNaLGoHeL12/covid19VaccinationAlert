@@ -77,8 +77,9 @@ class Register extends Component {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin' : 'https://covaccine-tracker.herokuapp.com/rest/data/district_name/775',
                 'username': username,
-                'password': password
+                'password': 'password'
             },
             body: JSON.stringify()
         };
