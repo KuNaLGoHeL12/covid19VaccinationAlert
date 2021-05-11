@@ -77,9 +77,8 @@ class Register extends Component {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin' : 'https://covaccine-tracker.herokuapp.com/rest/data/district_name/775',
-                'username': username,
-                'password': 'password'
+                'Authorization': 'Basic ' + btoa('api_admin_user:C0w1N_aP1'),
+                'Accept' : '*/*'
             },
             body: JSON.stringify()
         };
@@ -106,7 +105,7 @@ class Register extends Component {
         console.log("Inside Hide Alert");
         setTimeout(function() { //Start the timer
             window.location.reload(false); //After 1 second, set render to true
-        }.bind(this), 3000)
+        }.bind(this), 1200)
         
     }
 
