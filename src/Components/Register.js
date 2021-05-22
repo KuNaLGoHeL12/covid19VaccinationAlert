@@ -250,7 +250,7 @@ class Register extends Component {
                             <Districts parentCallbackForDistrict = {this.handleDistrictCallback} state_id = {this.state.state_id}></Districts>
                          )} */}
                             <br></br>
-                            <Button className="w-100 btn btn-success" type="submit" disabled={submit_disabled} onClick={this.handleSubmit}>Subscribe { this.state.isLoading && (<CircularProgress size={20} color="inherit"></CircularProgress>)} </Button>
+                            <Button className="w-100 btn btn-success" type="submit" disabled={submit_disabled} onClick={this.handleSubmit}>Subscribe { this.state.isLoading && (<CircularProgress size={15} color="inherit"></CircularProgress>)} </Button>
                         </Form>
                     </Card.Body>
                 </Card>
