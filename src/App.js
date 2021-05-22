@@ -2,17 +2,15 @@
 // import Register from './Components/Register';
 // import Footer from './Components/Footer';
 // import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
-import {createHashHistory} from'history';
 import Unsubscribe from './Components/Unsubscribe';
 import Home from './Components/Home';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  DefaultRoute
 } from "react-router-dom";
 import FileNotFound from './Components/FileNotFound';
-
+require('dotenv').config();
 function App() {
   
 
@@ -24,8 +22,7 @@ function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/unsubscribe/:id">
-            <Unsubscribe></Unsubscribe>
+          <Route exact path="/unsubscribe/:id" component={Unsubscribe}>
           </Route>
           <Route exact path="/">
             <Home />

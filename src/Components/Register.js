@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
 import States from './States';
 import SweetAlert from 'react-bootstrap-sweetalert';
-import { wait } from '@testing-library/dom';
+import { CircularProgress } from '@material-ui/core';
 
 class Register extends Component {
 
@@ -17,9 +17,9 @@ class Register extends Component {
             pinCodeRendered: true,
             state_id: '',
             district_id: '',
-            alert: null
+            alert: null,
+            isLoading : false
         }
-        const dotenv = require('dotenv').config();
     }
     handleNameChange = (event) => {
         //console.log("GGGGG ::: "+event.target.value);
@@ -43,74 +43,137 @@ class Register extends Component {
 
     handleSubmit = (event) => {
 
+        this.setState({
+            isLoading : true
+        })
+
+        let formValues = {};
+
 
         if (this.state.radio === 'P') {
-            const formValues = {
+            formValues = {
                 username: this.state.name,
                 email_id: this.state.email,
                 search_based_on: this.state.radio,
                 search_value: this.state.pincode
             }
-            console.log(formValues);
+            //console.log(formValues);
         } else {
-            const formValues = {
+            formValues = {
                 username: this.state.name,
                 email_id: this.state.email,
                 search_based_on: this.state.radio,
                 search_value: this.state.district_id
             }
-            console.log(formValues);
+            //console.log(formValues);
         }
-        this.setState({
-            alert: (<SweetAlert
-                success
-                title="Subscribed Successfully"
-                onConfirm={this.hideAlertCustom}
-            >
-                You should start receiving the covid19 Vaccination Alert on your registered E-mail in 30 mins.
-            </SweetAlert>)
-        });
+        
+        formValues = JSON.stringify(formValues); 
+
+        //console.log("converted data : "+formValues);
 
         const username = process.env.REACT_APP_API_USERNAME;
         const password = process.env.REACT_APP_API_PASSWORD;
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa('api_admin_user:C0w1N_aP1'),
-                'Accept' : '*/*'
+        //console.log(username);
+        //console.log(password);
+        let requestOptions = {
+            method : 'POST',
+            headers : {
+                'Content-Type' : 'application/json'
             },
-            body: JSON.stringify()
+            body : formValues
         };
 
-        console.log("Starting to call API");
+        //console.log("Starting to call API");
 
-        fetch("https://covaccine-tracker.herokuapp.com/rest/data/district_name/775",requestOptions)
-            .then((response) => {
+        
+        
+        let Success_msg = "You should start receiving the covid19 Vaccination Alert on your registered E-mail in 30 mins.";
+
+        let error_msg = "Some error occurred. Please try after sometime or correct the entered details and then try again.";
+
+        let already_subscribed_msg = "You have already subscribed. Please don't overload the application with already subscribed E-mail Id";
+
+        fetch(process.env.REACT_APP_API_HOST+"/rest/alert/subscribe/",requestOptions).then((response) => {
                 return response.json();
-            })
-            .then(data => {
-                console.log("KKG : ");
-                console.log(data);
-
+            }).then(data => {
+                //console.log("KKG : ");
+                //console.log(data);
+                let code = data.responseCode;
+                if(code === 200){
+                    this.setState({
+                        alert: (<SweetAlert
+                            success
+                            title="Subscribed Successfully"
+                            onConfirm={this.hideAlertCustom}
+                        >
+                            { Success_msg }
+                        </SweetAlert>),
+                        isLoading : false
+                    });
+                }else if(code === 502){
+                    this.setState({
+                        alert: (<SweetAlert
+                            warning
+                            title="Subscription Failed"
+                            onConfirm={this.hideWarningAlert}
+                        >
+                            { already_subscribed_msg }
+                        </SweetAlert>),
+                        isLoading : false
+                    });
+                }else {
+                    this.setState({
+                        alert: (<SweetAlert
+                            error
+                            title="Subscription Failed"
+                            onConfirm={this.hideErrorAlert}
+                        >
+                            { error_msg }
+                        </SweetAlert>),
+                        isLoading : false
+                    });
+                }
 
             }).catch(error => {
-                console.log(error);
+                //console.log("errro : "+error);
+                //console.log("typeof : "+typeof error);
+                //console.log("KKK : "+String(error));
+
+                this.setState({
+                    alert: (<SweetAlert
+                        error
+                        title="Subscription Failed"
+                        onConfirm={this.hideErrorAlert}
+                    >
+                        {String(error)}
+                    </SweetAlert>),
+                    isLoading : false
+                });
             });
+            event.preventDefault();
 
-        event.preventDefault();
-    }
-
-    hideAlertCustom = (event) => {
-        console.log("Inside Hide Alert");
-        setTimeout(function() { //Start the timer
-            window.location.reload(false); //After 1 second, set render to true
-        }.bind(this), 1200)
         
     }
 
+    hideAlertCustom = (event) => {
+        //console.log("Inside Hide Alert");
+        window.location.reload(false); //After 1 second, set render to true
+        
+    }
+
+    hideWarningAlert = (event) => {
+        window.location.reload(false); //After 1 second, set render to true
+    }
+
+    hideErrorAlert = (event) => {
+        this.setState({
+            alert : null
+        });
+    }
+
     districtRadioClicked = (event) => {
-        console.log("kunal");
+        //("kunal");
         this.setState({
             radio: 'D',
             pinCodeRendered: false,
@@ -119,7 +182,7 @@ class Register extends Component {
     }
 
     pincodeRadioClicked = (event) => {
-        console.log("kunal123 : " + event.target.checked);
+        //console.log("kunal123 : " + event.target.checked);
         this.setState({
             radio: 'P',
             pinCodeRendered: true,
@@ -128,7 +191,7 @@ class Register extends Component {
         });
     }
     handleStateCallback = (childData) => {
-        console.log("Inside Parent for State change : " + childData);
+        //console.log("Inside Parent for State change : " + childData);
         this.setState({
             state_id: childData
         })
@@ -136,7 +199,7 @@ class Register extends Component {
 
 
     handleDistrictCallback = (childData) => {
-        console.log("Inside Parent For District CHange : " + childData);
+        //console.log("Inside Parent For District CHange : " + childData);
         this.setState({ district_id: childData });
     }
     render() {
@@ -187,7 +250,7 @@ class Register extends Component {
                             <Districts parentCallbackForDistrict = {this.handleDistrictCallback} state_id = {this.state.state_id}></Districts>
                          )} */}
                             <br></br>
-                            <Button className="w-100 btn btn-success" type="submit" disabled={submit_disabled} onClick={this.handleSubmit}>Subscribe</Button>
+                            <Button className="w-100 btn btn-success" type="submit" disabled={submit_disabled} onClick={this.handleSubmit}>Subscribe { this.state.isLoading && (<CircularProgress size={20} color="inherit"></CircularProgress>)} </Button>
                         </Form>
                     </Card.Body>
                 </Card>

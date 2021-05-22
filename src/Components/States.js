@@ -26,8 +26,8 @@ class States extends Component {
             return response.json();
           })
           .then(data => {
-             // console.log(data);
-           // console.log("KKG : ");
+             //console.log(data);
+           //console.log("KKG : ");
             let statesFromApi = data.states.map(team => {
                 return {id: team.state_id, display: team.state_name}
               });
@@ -36,12 +36,12 @@ class States extends Component {
                 states: [{id: '', display: ''}].concat(statesFromApi)
             });
           }).catch(error => {
-            console.log(error);
+            //console.log(error);
           });
     }
 
     fetchDistricts(state_id){
-        console.log("Inside fetchDistricts : "+state_id);
+        //console.log("Inside fetchDistricts : "+state_id);
 
         fetch("https://cdn-api.co-vin.in/api/v2/admin/location/districts/"+state_id)
         .then((response) => {
@@ -58,12 +58,12 @@ class States extends Component {
               districts: [{id: '', display: ''}].concat(districtsFromApi)
           });
         }).catch(error => {
-          console.log(error);
+          //console.log(error);
         });
       }
 
     handleStateChange = (event) =>{
-          console.log("Inside stateChange handler : "+event.target.value);
+          //console.log("Inside stateChange handler : "+event.target.value);
           this.props.parentCallbackForState(event.target.value);
         
              this.setState({
@@ -76,7 +76,7 @@ class States extends Component {
     handleDistrictChange = (event) =>{
         this.props.parentCallbackForDistrict(event.target.value);
 
-        console.log("Inside District change state method "+event.target.value);
+        //("Inside District change state method "+event.target.value);
 
           this.setState({
             selectedDistrict : event.target.value
