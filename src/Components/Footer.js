@@ -16,7 +16,7 @@ const Footer = () => {
       </MDBContainer>
       <div className="footer-copyright text-center py-3">
         <MDBContainer fluid>
-          For any issue / suggestion, please feel free to write @ <a href="mailto:kkg176@gmail.com">our official mail id</a>
+          For any issue / suggestion, please feel free to write @ <a href="mailto:covaccinealerts@gmail.com">our official mail id</a>
         </MDBContainer>
       </div>
     </MDBFooter>
