@@ -72,8 +72,8 @@ class Register extends Component {
 
         //console.log("converted data : "+formValues);
 
-        const username = process.env.REACT_APP_API_USERNAME;
-        const password = process.env.REACT_APP_API_PASSWORD;
+       // const username = process.env.REACT_APP_API_USERNAME;
+       // const password = process.env.REACT_APP_API_PASSWORD;
         //console.log(username);
         //console.log(password);
         let requestOptions = {
@@ -88,7 +88,7 @@ class Register extends Component {
 
         
         
-        let Success_msg = "You should start receiving the covid19 Vaccination Alert on your registered E-mail in 30 mins.";
+        let Success_msg = "You should start receiving the covid19 Vaccination Alert on your registered E-mail in 30 mins, if slots are available.";
 
         let error_msg = "Some error occurred. Please try after sometime or correct the entered details and then try again.";
 
