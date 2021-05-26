@@ -25,7 +25,8 @@ class Unsubscribe extends Component{
 
     hideAlertCustom = (event) => {
         //console.log("Inside Hide Alert");
-        window.location.assign(process.env.REACT_APP_HOST);
+        //window.location.assign(process.env.REACT_APP_HOST);
+        this.props.history.push('/');
         
     }
     hideAlertCustomError = (event) => {
